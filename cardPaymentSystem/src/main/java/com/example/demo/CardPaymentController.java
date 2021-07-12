@@ -52,6 +52,11 @@ public class CardPaymentController {
 	    String mngtNo = "";
 	    String decodeCardInfo = null;
 	    String[] cardInfoArr;
+	    
+	    response.setCharacterEncoding("UTF-8"); 
+    	response.setContentType("text/html; charset=UTF-8");
+    	
+    	
 	    try {
 		        BufferedReader reader = request.getReader();
 		        while((line = reader.readLine()) != null) {
@@ -129,7 +134,11 @@ public class CardPaymentController {
 			        model.addAttribute("tradeAmt", tradeAmt);
 			        model.addAttribute("vat", vat);
 		        }
-		        
+		        else
+		        {
+		        	model.addAttribute("errorCode"	, "0201");
+		        	model.addAttribute("errorMsg"	, "관리번호 정보가 없습니다.");
+		        }
 		        
 		        response.getWriter().println(model);		        
 		    	
@@ -220,6 +229,10 @@ public class CardPaymentController {
 		    String line = null;
 		    String msgData = null;
 		    String originMngtNo = null;
+		    
+		    response.setCharacterEncoding("UTF-8"); 
+        	response.setContentType("text/html; charset=UTF-8");
+        	
 		    try {
 			        BufferedReader reader = request.getReader();
 			        while((line = reader.readLine()) != null) {
@@ -231,6 +244,9 @@ public class CardPaymentController {
 			        
 			        // 1. 원 거래번호 조회
 			        originMngtNo = node.get("cnlMngtNo").toString().replaceAll("\\\"", "");
+			        
+			        String cnlVatFlag = node.get("cnlVatFlag").toString().replaceAll("\\\"", "");
+			        
 			        Optional<CardPaymentEntity> optional = cardPaymentRepository.findById(originMngtNo);
 			        if(optional.isPresent())
 			        {
@@ -264,17 +280,42 @@ public class CardPaymentController {
 						
 				        if(bTradeAmt.compareTo(bAccountAmt) > 0)
 				        {
-//				        	throw new ResponseStatusException("");
+				        	model.addAttribute("errorCode"	, "0301");
+				        	model.addAttribute("errorMsg"	, "계좌잔액보다 취소요청금액이 큽니다.");
+				        	
+				        	response.getWriter().println(model);
+				        	return;
 				        }
 			        	
-				        if(bVat.compareTo(bAccountVatAmt) > 0)
+				        System.out.println("cnlVatFlag : " + cnlVatFlag);
+				        
+				        if(bVat.compareTo(bAccountVatAmt) > 0 && "SET".equals(cnlVatFlag) == false)
 				        {
+				        	System.out.println("정합성2");
+				        	model.addAttribute("errorCode"	, "0302");
+				        	model.addAttribute("errorMsg"	, "계좌부가세잔액보다 취소요청 부가세금액이 큽니다.");
 				        	
+				        	response.getWriter().println(model);
+				        	return;
 				        }
 				        
-				        if(bAccountVatAmt.compareTo(bAccountAmt.subtract(bTradeAmt)) > 0)
+				        // 입력받은 부가세가 없으면 계좌 부가세 잔액으로 치환
+				        if("SET".equals(cnlVatFlag))
 				        {
+				        	if(bVat.compareTo(bAccountVatAmt) > 0)
+				        	{
+				        		bVat = bAccountVatAmt;
+				        	}
+				        }
+				        
+				        if((bAccountVatAmt.subtract(bVat)).compareTo(bAccountAmt.subtract(bTradeAmt)) > 0)
+				        {
+				        	System.out.println("정합성3");
+				        	model.addAttribute("errorCode"	, "0303");
+				        	model.addAttribute("errorMsg"	, "계좌잔액보다 부가세금액이 큽니다.");
 				        	
+				        	response.getWriter().println(model);
+				        	return;
 				        }
 				        
 				        bAccountAmt 	= bAccountAmt.subtract(bTradeAmt);
@@ -331,6 +372,12 @@ public class CardPaymentController {
 						model.addAttribute("msgData", msgData);
 
 			        }
+			        else
+			        {
+			        	model.addAttribute("errorCode"	, "0304");
+			        	model.addAttribute("errorMsg"	, "관리번호 정보가 없습니다.");
+			        }
+			        System.out.println("출력");
 			        
 					response.getWriter().println(model);			        
 			        

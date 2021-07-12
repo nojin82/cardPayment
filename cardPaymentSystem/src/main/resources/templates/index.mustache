@@ -15,27 +15,27 @@
 	       <form>
 	           <div class="form-group">
 	               <label for="title">카드번호</label>
-	               <input type="text" class="form-control" id="cardNo" placeholder="카드번호를 입력하세요">
+	               <input type="text" class="form-control" id="cardNo" placeholder="카드번호를 입력하세요"  maxlength="20">
 	           </div>
 	           <div class="form-group">
 	               <label for="author">유효기간</label>
-	               <input type="text" class="form-control" id="cardLife" placeholder="유효기간을 입력하세요">
+	               <input type="text" class="form-control" id="cardLife" placeholder="유효기간을 입력하세요" maxlength="4">
 	           </div>
 	           <div class="form-group">
 	               <label for="content">CVC</label>
-	               <textarea class="form-control" id="cvc" placeholder="CVC를 입력하세요"></textarea>
+	               <textarea class="form-control" id="cvc" placeholder="CVC를 입력하세요" maxlength="3"></textarea>
 	           </div>
 	           <div class="form-group">
 	               <label for="content">할부개월수</label>
-	               <textarea class="form-control" id="miCnt" placeholder="할부개월수를 입력하세요"></textarea>
+	               <textarea class="form-control" id="miCnt" placeholder="할부개월수를 입력하세요" maxlength="2"></textarea>
 	           </div>
 	           <div class="form-group">
 	               <label for="content">결제금액</label>
-	               <textarea class="form-control" id="tradeAmt" placeholder="결제금액을 입력하세요"></textarea>
+	               <textarea class="form-control" id="tradeAmt" placeholder="결제금액을 입력하세요" maxlength="10"></textarea>
 	           </div>
 	           <div class="form-group">
 	               <label for="content">부가가치세</label>
-	               <textarea class="form-control" id="vat" placeholder="부가가치세를 입력하세요"></textarea>
+	               <textarea class="form-control" id="vat" placeholder="부가가치세를 입력하세요" maxlength="10"></textarea>
 	           </div>
 	       </form>
 	       <button type="button" class="btn btn-primary" id="btn-save">등록</button>
@@ -49,7 +49,7 @@
 	       <form>
 	           <div class="form-group">
 	               <label for="content">관리번호</label>
-	               <textarea class="form-control" id="mngtNo" placeholder="관리번호를 입력하세요"></textarea>
+	               <textarea class="form-control" id="mngtNo" placeholder="관리번호를 입력하세요" maxlength="20"></textarea>
 	           </div>
 	       </form>
 	       <button type="button" class="btn btn-primary" id="btn-get">조회</button>
@@ -63,15 +63,15 @@
 	       <form>
 	           <div class="form-group">
 	               <label for="content">관리번호</label>
-	               <textarea class="form-control" id="cnlMngtNo" placeholder="관리번호를 입력하세요"></textarea>
+	               <textarea class="form-control" id="cnlMngtNo" placeholder="관리번호를 입력하세요" maxlength="20"></textarea>
 	           </div>
 	            <div class="form-group">
 	               <label for="content">취소금액</label>
-	               <textarea class="form-control" id="cnlTradeAmt" placeholder="취소금액을 입력하세요"></textarea>
+	               <textarea class="form-control" id="cnlTradeAmt" placeholder="취소금액을 입력하세요" maxlength="10"></textarea>
 	           </div>
 	           <div class="form-group">
 	               <label for="content">부가가치세</label>
-	               <textarea class="form-control" id="cnlVat" placeholder="부가가치세를 입력하세요"></textarea>
+	               <textarea class="form-control" id="cnlVat" placeholder="부가가치세를 입력하세요" maxlength="10"></textarea>
 	           </div>
 	       </form>
 	       <button type="button" class="btn btn-secondary" id="btn-cancel">취소</button>

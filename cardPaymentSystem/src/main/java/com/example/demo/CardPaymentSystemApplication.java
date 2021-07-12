@@ -14,20 +14,6 @@ import com.example.demo.StringConverter;
 public class CardPaymentSystemApplication {
 
 	public static void main(String[] args) {
-				
-		
-		String amt = "500000";
-		String celAmt = "500000";
-		
-		BigDecimal bAmt = new BigDecimal(amt);
-		BigDecimal bCelAmt = new BigDecimal(celAmt);
-		
-		if(bAmt.compareTo(bCelAmt) >= 0)
-		{
-			System.out.println("1231233332");
-		}
-		
-				
 		
 		SpringApplication.run(CardPaymentSystemApplication.class, args);
 		

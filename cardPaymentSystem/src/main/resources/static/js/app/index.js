@@ -1,3 +1,4 @@
+
 function validCheck(_flag)
 {
 	var result = true; 
@@ -5,21 +6,21 @@ function validCheck(_flag)
 	// 결제 등록
 	if(_flag == "1")
 	{
-		if($("#cardNo").val() == null || $("#cardNo").val().trim().length == 0)
+		if($("#cardNo").val() == null || $("#cardNo").val().trim().length == 0 || $("#cardNo").val().trim().length < 10)
 		{
-			alert("카드번호를 입력하세요.");
+			alert("카드번호를 10자리 이상 입력하세요.");
 			$("#cardNo").focus();
 			result = false;
 		}
-		else if($("#cardLife").val() == null || $("#cardLife").val().trim().length == 0)
+		else if($("#cardLife").val() == null || $("#cardLife").val().trim().length == 0 || $("#cardLife").val().trim().length <4)
 		{
-			alert("유효기간을 입력하세요.");
+			alert("카드 유효기간 4자리를 입력하세요.");
 			$("#cardLife").focus();
 			result = false;
 		}
-		else if($("#cvc").val() == null || $("#cvc").val().trim().length == 0)
+		else if($("#cvc").val() == null || $("#cvc").val().trim().length == 0 || $("#cvc").val().trim().length < 3)
 		{
-			alert("cvc를 입력하세요.");
+			alert("cvc 3자리를 입력하세요.");
 			$("#cvc").focus();
 			result = false;
 		}
@@ -38,9 +39,9 @@ function validCheck(_flag)
 	}
 	else if(_flag == "2") // 단건 조회
 	{
-		if($("#mngtNo").val() == null || $("#mngtNo").val().trim().length == 0)
+		if($("#mngtNo").val() == null || $("#mngtNo").val().trim().length == 0 || $("#mngtNo").val().trim().length != 20)
 		{
-			alert("관리번호를 입력하세요.");
+			alert("관리번호 20자리를 정확히 입력하세요.");
 			$("#mngtNo").focus();
 			result = false;
 		}
@@ -48,9 +49,9 @@ function validCheck(_flag)
 	} 
 	else if(_flag == "3") // 취소 등록
 	{
-		if($("#cnlMngtNo").val() == null || $("#cnlMngtNo").val().trim().length == 0)
+		if($("#cnlMngtNo").val() == null || $("#cnlMngtNo").val().trim().length == 0 || $("#cnlMngtNo").val().trim().length != 20)
 		{
-			alert("취소요청 관리번호를 입력하세요.");
+			alert("취소요청 관리번호 20자리를 정확히 입력하세요.");
 			$("#cnlMngtNo").focus();
 			result = false;
 		}
@@ -86,11 +87,13 @@ var main = {
     		miCnt : $("#miCnt").val(),
     		tradeAmt : $("#tradeAmt").val(),
     		vat : $("#vat").val(),
+			vatFlag : "ORG",
 			mngtNo : $("#mngtNo").val()
        };
 	   if($("#vat").val() == null  || $("#vat").val().trim().length == 0)
 	   {
 	   		data.vat = Math.round($("#tradeAmt").val() / 11);
+			data.vatFlag = "SET";
 	   }	
 	   if(validCheck("1")){
 		 	$.ajax({
@@ -138,11 +141,13 @@ var main = {
        var data = {
 			cnlMngtNo : $("#cnlMngtNo").val(),
 			cnlTradeAmt : $("#cnlTradeAmt").val(),
-			cnlVat : $("#cnlVat").val()
+			cnlVat : $("#cnlVat").val(),
+			cnlVatFlag : "ORG"
        };
  	   if($("#cnlVat").val() == null  || $("#cnlVat").val().trim().length == 0)
 	   {
 	   		data.cnlVat = Math.round($("#cnlTradeAmt").val() / 11);
+			data.cnlVatFlag = "SET";
 	   }
 	   if(validCheck("3")){
 	       $.ajax({
